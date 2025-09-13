@@ -68,11 +68,11 @@ public class Basics {
         System.out.println("Sorted list alphabetically without case sensitive "+sortedListWithoutCaseSensitive.toString());
 
 
-        //sort alphabetically without case sensitive
+        //sort alphabetically with case sensitive preserving input case sensitivity
         List<String> sortedListWithoutCaseSensitivePreserveInput= words.stream().sorted(
                 (s1,s2)-> s1.compareTo(s2))
                 .toList();
-        System.out.println("Sorted list alphabetically without case sensitive preserving input case sensitivity "+ sortedListWithoutCaseSensitivePreserveInput);
+        System.out.println("Sorted list alphabetically with case sensitive preserving input case sensitivity "+ sortedListWithoutCaseSensitivePreserveInput);
 
         // sort the words by their size
         List<String> sortedBasedOnLength = words.stream().sorted(Comparator.comparingInt(s->s.length())).toList();
@@ -83,8 +83,16 @@ public class Basics {
         System.out.println("countOfWordsSizeGreaterThan3 -> "+countOfWordsSizeGreaterThan3);
 
         // Longest word in the list
-        String longestWord=words.stream().max(Comparator.comparingInt(s->s.length())).toString();
+        String longestWord=words.stream().max(Comparator.comparingInt(s->s.length())).orElseThrow();
         System.out.println("Longest word in the list is "+longestWord);
+
+        // shortest word in the list
+        String shortestString=words.stream().min(Comparator.comparingInt(s-> s.length())).orElseThrow();
+        System.out.println("Shortest String using min ->  "+shortestString);
+
+        // Shortest string using lambda operator
+        String shortestStringUsingReducer=words.stream().reduce((s1,s2)-> s1.length()<=s2.length()? s1 : s2).orElseThrow();
+        System.out.println("shortest string using reducer ->  "+shortestStringUsingReducer);
 
 
         //group by words
@@ -99,11 +107,6 @@ public class Basics {
         //distinct
         List<String> distinctWOrds= words.stream().distinct().toList();
         System.out.println("distinct words are "+distinctWOrds);
-
-
-
-
-
 
 
     }
