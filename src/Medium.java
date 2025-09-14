@@ -1,7 +1,4 @@
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Medium {
@@ -10,6 +7,7 @@ public class Medium {
 
         List<String> words=List.of("Java", "streams", "are", "powerful", "and", "cool","java","powerful","intelliJ");
         List<Integer> numbers= List.of(12,1,15,16,768,343,1,43,4);
+        String name="kavan";
 
 
         //Sort a list of strings in reverse order
@@ -93,6 +91,33 @@ public class Medium {
         //Find the average length of words
         Double averageLengthOfWords= words.stream().mapToInt(s->s.length()).average().getAsDouble();
         System.out.println("average Length of words "+ averageLengthOfWords);
+
+        //Find all duplicate elements
+        List<String> duplicateWords=words.stream().filter(n-> Collections.frequency(words, n)>1).toList();
+        System.out.println("duplicate words "+duplicateWords);
+
+        // Find all unique elements
+        List<String> uniqueWords=words.stream().map(word->word.toLowerCase()).filter(word-> Collections.frequency(words, word)==1).toList();
+        System.out.println("Unique words "+uniqueWords);
+
+
+        //Find first non-repetitive element in list
+        String firstNonRepetitiveWord=words.stream().filter(n-> Collections.frequency(words, n)==1).findFirst().orElseThrow();
+        System.out.println("First non-repetitive word in the list "+firstNonRepetitiveWord);
+
+        // Find the duplicate or unique without case sensitivity
+        List<String> uniqueWithOutCaseSensitivity=words.stream().filter(word-> Collections.frequency(words.stream().map(w->w.toLowerCase()).toList(),word)==1).toList();
+        System.out.println("uniqueWithOutCaseSensitivity "+uniqueWithOutCaseSensitivity);
+
+        //Find the first non-repeated character in a string
+//        Arrays.stream(name.toCharArray()).
+        char firstNonRepetitiveChar=name.chars().mapToObj(c-> (char)c).filter(c-> name.indexOf(c)==name.lastIndexOf(c)).findFirst().orElseThrow();
+        System.out.println("First non repetitive char in "+ name +" is --> "+firstNonRepetitiveChar);
+
+        //first repetitive character
+        char firstRepetitiveChar= name.chars().mapToObj(c-> (char) c).filter(c-> name.indexOf(c)!=name.lastIndexOf(c)).findFirst().orElseThrow();
+        System.out.println("First repetitive char in "+ name +" is --> "+firstRepetitiveChar);
+
 
     }
 }

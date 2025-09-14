@@ -108,6 +108,14 @@ public class Basics {
         List<String> distinctWOrds= words.stream().distinct().toList();
         System.out.println("distinct words are "+distinctWOrds);
 
+        //Check if a list contains only even numbers
+        boolean isAllNumsAreEven=numbers.stream().allMatch(n->n%2==0);
+        System.out.println("Is all numbers in the list are even? "+isAllNumsAreEven);
+
+        //check if any of the element is even
+        boolean isAnyNumIsEven=numbers.stream().anyMatch(n->n%2==0);
+        System.out.println("is any number is even? "+isAnyNumIsEven);
+
 
     }
 }
