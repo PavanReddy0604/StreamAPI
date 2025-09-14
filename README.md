@@ -128,4 +128,66 @@ String result = words.stream()
   String result = words.stream()
   .collect(Collectors.joining(", ", "[", "]"));
   // Output: "[Java, Stream, API]"
+
+
+# Collections.frequency() in Java
+
+The `Collections.frequency(Collection<?> c, Object o)` method returns the **number of occurrences** of the specified element in the given collection.
+
+- For each element it iterates through the collection and counts matches of the given element.
+- Useful for **quick checks** when working with smaller collections.
+- For **large datasets**, it can be inefficient if used repeatedly inside a stream, because it scans the collection each time.
+
+---
+
+## Use Case with Streams
+
+We can use `Collections.frequency()` inside a stream `filter()` to find elements that occur more than a certain number of times.
+
+```java
+import java.util.*;
+import java.util.stream.*;
+
+public class FrequencyExample {
+    public static void main(String[] args) {
+        List<String> words = Arrays.asList("Java", "Spring", "Java", "Streams", "Java", "Spring");
+
+        // Find words that occur more than 2 times
+        List<String> result = words.stream()
+                                   .filter(w -> Collections.frequency(words, w) > 2)
+                                   .distinct() // avoid duplicates in result
+                                   .toList();
+
+        System.out.println(result); // Output: [Java]
+    }
+}
+```
+
+## When to Use groupingBy Instead
+
+For larger datasets, using `Collections.frequency()` repeatedly is inefficient. Instead, use `Collectors.groupingBy()` with `counting()` which computes frequencies in one pass.
+
+```java
+import java.util.*;
+import java.util.stream.*;
+
+public class GroupingByExample {
+    public static void main(String[] args) {
+        List<String> words = Arrays.asList("Java", "Spring", "Java", "Streams", "Java", "Spring");
+
+        Map<String, Long> frequencyMap = words.stream()
+            .collect(Collectors.groupingBy(w -> w, Collectors.counting()));
+
+        List<String> result = frequencyMap.entrySet().stream()
+            .filter(e -> e.getValue() > 2)
+            .map(Map.Entry::getKey)
+            .toList();
+
+        System.out.println(result); // Output: [Java]
+    }
+}
+```
+
+✅ Use Collections.frequency() for small, quick checks.
+✅ Use groupingBy + counting for large-scale frequency analysis.
  
