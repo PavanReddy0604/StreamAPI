@@ -118,6 +118,19 @@ public class Medium {
         char firstRepetitiveChar= name.chars().mapToObj(c-> (char) c).filter(c-> name.indexOf(c)!=name.lastIndexOf(c)).findFirst().orElseThrow();
         System.out.println("First repetitive char in "+ name +" is --> "+firstRepetitiveChar);
 
+        //Sum integers by odd/even
+        Map<String,Integer> sumOfEvenAndOddNums= numbers.stream().collect(Collectors.groupingBy(n->n%2==0? "sumOfEven" : "sumOfOdd", Collectors.summingInt(
+                n->n
+        )));
+        System.out.println("sumOfEvenAndOddNums  "+sumOfEvenAndOddNums  );
+
+        //Average word length per first character
+        Map<Character, Double> avgWordPerLengthBasedOnFirstCharOfTheWord=words.stream().collect(Collectors.groupingBy(word->word.charAt(0), Collectors.averagingInt(word->word.length())));
+        System.out.println("avgWordPerLengthBasedOnFirstCharOfTheWord  "+avgWordPerLengthBasedOnFirstCharOfTheWord);
+
+        //Group words by length and store uppercase versions
+        Map<Integer,List<String>> groupedWordsByLengthWithUpperCaseValues= words.stream().collect(Collectors.groupingBy(word-> word.length(), Collectors.mapping(word->word.toUpperCase(), Collectors.toList())));
+        System.out.println("groupedWordsByLengthWithUpperCaseValues  "+groupedWordsByLengthWithUpperCaseValues);
 
     }
 }
