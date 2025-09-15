@@ -1,5 +1,6 @@
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Medium {
 
@@ -131,6 +132,30 @@ public class Medium {
         //Group words by length and store uppercase versions
         Map<Integer,List<String>> groupedWordsByLengthWithUpperCaseValues= words.stream().collect(Collectors.groupingBy(word-> word.length(), Collectors.mapping(word->word.toUpperCase(), Collectors.toList())));
         System.out.println("groupedWordsByLengthWithUpperCaseValues  "+groupedWordsByLengthWithUpperCaseValues);
+
+        Map<Character,List<String>> groupedWordsWithFirstCharWithUpperCaseValues=words.stream().collect(Collectors.groupingBy(word-> word.charAt(0), Collectors.mapping(word-> word.toUpperCase(), Collectors.toList())));
+        System.out.println("groupedWordsWithFirstCharWithUpperCaseValues "+groupedWordsWithFirstCharWithUpperCaseValues);
+
+        //
+
+        //reverse list index based
+        List<Integer> indexBasedReversedElements=IntStream.range(0,numbers.size()).mapToObj(index-> numbers.get(numbers.size()-index-1)).toList();
+        System.out.println("Reversed list of Integer elements index based "+ indexBasedReversedElements);
+
+        /*
+         Explanation:
+         IntStream.range(start,end) -> creates the stream of length mentioned in the arguments.These represent the original indices.
+         then, for each index, the respective last value will be set.
+
+         This is same for all type of lists.
+         */
+
+        //reverse list of strings index based
+        List<String> reversedWords= IntStream.range(0,words.size()).mapToObj(index-> words.get(words.size()-index-1)).toList();
+        System.out.println("Reversed list of String elements index based "+reversedWords);
+
+
+
 
     }
 }
